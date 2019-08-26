@@ -25,4 +25,5 @@ console.log('Первые 2 цифры полученного числа: ', sMu
 
 var elem = window.document.createElement("p");
       elem.innerHTML = "Первые 2 цифры полученного числа: "+sMult.slice(0,2);
-      document.body.appendChild(elem); /* В отладчике выдает ошибку 'ReferenceError: window is not defined' ?(  но все работает*/
+      document.body.appendChild(elem); 
+      /* В отладчике выдает ошибку 'ReferenceError: window is not defined' ?(  но все работает*/
