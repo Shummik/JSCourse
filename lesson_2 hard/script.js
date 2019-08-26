@@ -18,3 +18,11 @@ console.log('Произведение чисел = : ', mult);
 
   mult **= 3; //С помощью нового метода возводим в степень
 console.log('Произведение в кубе = ',mult);
+
+let sMult = mult.toString();
+console.log('Первые 2 цифры полученного числа: ', sMult.slice(0,2));
+// document.write('Первые 2 цифры полученного числа: ', sMult.slice(0,2));
+
+var elem = window.document.createElement("p");
+      elem.innerHTML = "Первые 2 цифры полученного числа: "+sMult.slice(0,2);
+      document.body.appendChild(elem); /* В отладчике выдает ошибку 'ReferenceError: window is not defined' ?(  но все работает*/
