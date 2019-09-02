@@ -8,38 +8,64 @@
 // то вместо “Цель будет достигнута”, необходимо выводить “Цель не будет достигнута”
 // 4) Если budgetDay отрицательное значение то вместо уровня дохода пусть выводится сообщение “Что то пошло не так”
 
-let money = +prompt('Ваш ежемесячный доход?');
+let money;
 let deposit = confirm('Есть ли у Вас депозит в банке?');
-let income = '15';
+// let period = 12;
 
-let question1 = prompt('Какие обязательные ежемесячные расходы у вас есть?'),
-  expenses1 = +prompt('Во сколько это обойдется?'),
-  question2 = prompt('Какие обязательные ежемесячные расходы еще у вас есть?'),
-  expenses2 = +prompt('Во сколько это обойдется?');
+let start = function () {
+  let sum = 0;
+  do {
+    money = +prompt('Ваш ежемесячный доход?', 'Введите ваш доход');
+    sum += money; /* На будущее) */
+  } while (!money);
+  return sum;
+};
+let income = start();
+
+function getExpensesMonth() {
+  let sum = 0,
+    expenses = 0,
+    question;
+  do {
+    question = prompt('Какие обязательные ежемесячные расходы у вас есть? Если нет, пропустите этот пункт');
+    expenses = +prompt('Во сколько это обойдется? Если нет, пропустите этот пункт');
+    sum += expenses;
+  } while (!!question || !!expenses);
+  return sum;
+}
+let expenses = getExpensesMonth();
 
 let mission = +prompt('Сколько планируете накопить?');
 
-let budgetMonth = money - (expenses1 + expenses2);
-let budgetDay = Math.floor(budgetMonth / 30);
-
-let getExpensesMonth = function () {
-  /*сумма всех расходов за месяц  */
-  return expenses1 + expenses2;
-};
-
-let expenses = getExpensesMonth();
-
-function getAccumulatedMonth() {
+function getAccumulatedMonth(money, expenses) {
   /*Накопления за месяц  */
   return money - expenses;
 }
-let accumulatedMonth = getAccumulatedMonth();
+let accumulatedMonth = getAccumulatedMonth(income, expenses);
+
+function getBudgetDay(){
+  let budgetDay = Math.floor(accumulatedMonth/30);
+  if (budgetDay > 0){
+    console.log('Доход в день: '+ budgetDay );
+      return budgetDay;
+  }else {
+      return console.log('Что-то пошло не так');
+  }
+}
+let budgetDay = getBudgetDay();
+
+
+
 
 function getTargetMonth() {
   /*За какой период будет достигнута цель  */
-  return Math.ceil(mission / accumulatedMonth);
+  if (accumulatedMonth > 0){
+    return console.log('Цель будет достигнута через: ' + Math.ceil(mission / accumulatedMonth) + ' месяцев!');
+  } else {
+    return console.log('Цель не будет достигнута');
+  }  
 }
-let monthPlan = getTargetMonth();
+getTargetMonth();
 
 function showTypeof(data) { // выводим тип данных
   console.log(data, typeof (data));
@@ -57,15 +83,9 @@ function getStatusIncome() {
   }
 }
 
-
-console.log('expenses: ', expenses);
-console.log('profit: ', accumulatedMonth);
-console.log('monthPlan: ', monthPlan);
-
-console.clear();
+// console.clear();
 showTypeof(money);
 showTypeof(income);
 showTypeof(deposit);
 console.log(getStatusIncome());
 console.log('Накоплено за период: ' + accumulatedMonth);
-console.log('Цель будет достигнута через: ' + monthPlan + ' месяцев!');
