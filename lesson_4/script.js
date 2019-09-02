@@ -18,46 +18,47 @@ let deposit = confirm('Есть ли у Вас депозит в банке?');
 let income = '15';
 
 let question1 = prompt('Какие обязательные ежемесячные расходы у вас есть?'),
-    expenses1 = +prompt('Во сколько это обойдется?'),
-    question2 = prompt('Какие обязательные ежемесячные расходы еще у вас есть?'),
-    expenses2 = +prompt('Во сколько это обойдется?');
+  expenses1 = +prompt('Во сколько это обойдется?'),
+  question2 = prompt('Какие обязательные ежемесячные расходы еще у вас есть?'),
+  expenses2 = +prompt('Во сколько это обойдется?');
 
 let mission = +prompt('Сколько планируете накопить?');
 
 let budgetMonth = money - (expenses1 + expenses2);
-let budgetDay = Math.floor(budgetMonth/30);
+let budgetDay = Math.floor(budgetMonth / 30);
 
-function getExpensesMonth(){/*сумма всех расходов за месяц  */
-  let expenses = expenses1 + expenses2;
-  return expenses;  
-}    
+let getExpensesMonth = function () {
+  /*сумма всех расходов за месяц  */
+  return expenses1 + expenses2;
+};
+
 let expenses = getExpensesMonth();
 
-function getAccumulatedMonth(){/*Накопления за месяц  */
-  let profit = money - expenses;
-  return profit;  
-}    
+function getAccumulatedMonth() {
+  /*Накопления за месяц  */
+  return money - expenses;
+}
 let accumulatedMonth = getAccumulatedMonth();
 
-function getTargetMonth(){/*За какой период будет достигнута цель  */
-  let monthPlan = mission / accumulatedMonth;
-  return monthPlan;  
-}    
-let monthPlan = Math.ceil(getTargetMonth());
+function getTargetMonth() {
+  /*За какой период будет достигнута цель  */
+  return Math.ceil(mission / accumulatedMonth);
+}
+let monthPlan = getTargetMonth();
 
-function showTypeof(data) {  // выводим тип данных
+function showTypeof(data) { // выводим тип данных
   console.log(data, typeof (data));
 }
 
 function getStatusIncome() {
   if (budgetDay >= 800) {
-      return ("Высокий уровень дохода");
+    return ("Высокий уровень дохода");
   } else if (budgetDay >= 300 && budgetDay < 800) {
-      return ("Средний уровень дохода");
+    return ("Средний уровень дохода");
   } else if (budgetDay >= 0 && budgetDay < 300) {
-      return ("Низкий уровень дохода");
+    return ("Низкий уровень дохода");
   } else if (budgetDay < 0) {
-      return ("Что то пошло не так");
+    return ("Что то пошло не так");
   }
 }
 
