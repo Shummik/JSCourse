@@ -46,13 +46,13 @@ let accumulatedMonth = getAccumulatedMonth(income, expenses);
 function getBudgetDay(){
   let budgetDay = Math.floor(accumulatedMonth/30);
   if (budgetDay > 0){
-    console.log('Доход в день: '+ budgetDay );
-      return budgetDay;
+      return ('Доход в день: '+ budgetDay );
   }else {
-      return console.log('Что-то пошло не так');
+      return ('Что-то пошло не так');
   }
 }
 let budgetDay = getBudgetDay();
+console.log(getBudgetDay());
 
 
 
@@ -60,12 +60,12 @@ let budgetDay = getBudgetDay();
 function getTargetMonth() {
   /*За какой период будет достигнута цель  */
   if (accumulatedMonth > 0){
-    return console.log('Цель будет достигнута через: ' + Math.ceil(mission / accumulatedMonth) + ' месяцев!');
+    return ('Цель будет достигнута через: ' + Math.ceil(mission / accumulatedMonth) + ' месяцев!');
   } else {
-    return console.log('Цель не будет достигнута');
+    return ('Цель не будет достигнута');
   }  
 }
-getTargetMonth();
+console.log(getTargetMonth());
 
 function showTypeof(data) { // выводим тип данных
   console.log(data, typeof (data));
