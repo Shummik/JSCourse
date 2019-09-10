@@ -16,7 +16,8 @@ body.style.backgroundImage = 'url(./image/you-dont-know-js.jpg)';
 
 books.children[2].querySelector('a').textContent = 'Получится - "Книга 3. this и Прототипы Объектов"';
 
-body.removeChild(body.querySelector('.adv'));
+// body.removeChild(body.querySelector('.adv'));
+body.querySelector('.adv').remove();
 
 book2.insertBefore(book2.children[6], book2.children[4]);
 book2.insertBefore(book2.children[8], book2.children[5]);
