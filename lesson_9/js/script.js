@@ -135,7 +135,7 @@ let appData = {
         additionalIncomeValue.value = this.addIncome.join(', ');
         targetMonthValue.value = this.getTargetMonth();
         incomePeriodValue.value = this.calcPeriod();
-        periodSelect.addEventListener('mouseup', () => {
+        periodSelect.addEventListener('input', () => {
             periodAmount.textContent = periodSelect.value;
             incomePeriodValue.value = this.calcPeriod();
         });
@@ -218,7 +218,8 @@ let appData = {
         this.income = {};
         this.expenses = {};
         this.possibleExpenses = [];
-        periodSelect.addEventListener('mouseup', () => {
+        // Расчет “Накопления за период” сразу при изменении значении в ползунке
+        periodSelect.addEventListener('input', () => {
             periodAmount.textContent = periodSelect.value;
             incomePeriodValue.value = 0;
         });
@@ -231,26 +232,24 @@ let appData = {
         cancel.style.display = 'none';
     }
 };
+// Отслеживает и не дает вводить в инут ненужные символы
 function checkOut() {
     placeHolderName.forEach((item) => {
         item.addEventListener('input', function(event) {
             event.target.value = event.target.value.replace(/[^а-яА-ЯёЁ .?!,]/i,'');
         });
     });
-    placeHolderSum.forEach((item) => {
-        item.addEventListener('blur', function(event){
-            if (isNaN(event.target.value)) {
-                alert('Вводите только цифры!');
-                event.target.value = '';
-                return;
-            }
-        });
+    placeHolderSum.forEach(function (item) {
+    item.addEventListener('input', function (event) {
+      event.target.value = event.target.value.replace(/[\D]/i, '');
     });
+  });
 }
 
 checkOut();
 
-periodSelect.addEventListener('mouseup', function(){
+// Отслеживаем изменения ползунка и передаем значение в periodAmount
+periodSelect.addEventListener('input', function(){
             periodAmount.textContent = periodSelect.value;
 });
 

@@ -1,4 +1,14 @@
 'use strict';
+// 1) Переписать метод getIncome аналогично getExpenses
+// 2) Создать метод addIncomeBlock аналогичный addExpensesBlock
+// 3) Округлить вывод дневного бюджета
+// 4) Число под полоской (range) должно меняться в зависимости от позиции range
+// 5) Добавить обработчик события внутри метода showResult, который будет отслеживать период и 
+//  сразу менять значение в поле “Накопления за период”
+// 6) Блокировать все input[type=text] с левой стороны после нажатия кнопки рассчитать, после этого кнопка Рассчитать 
+//  пропадает и появляется кнопка Сбросить (есть в верстке) на кнопку сбросить пока ничего не навешиваем
+// 7) Вместо проверки поля Месячный доход в методе Start, запретить нажатие кнопки Рассчитать 
+//  пока поле Месячный доход пустой
 
 let calculate = document.getElementById('start'),
   cancel = document.querySelector('#cancel'),
@@ -45,6 +55,7 @@ let appData = {
   addIncome: [],
   possibleExpenses: [],
   start: function () {
+    // 7)
     if (salaryAmount.value === '' || isNaN(salaryAmount.value)) {
       calculate.readOnly = true;
       return;
@@ -73,6 +84,7 @@ let appData = {
       plusExpenses.style.display = 'none';
     }
   },
+  // 2) 
   addIncomeBlock: function () {
     let cloneIncomeItem = incomeItems[0].cloneNode(true);
     cloneIncomeItem.children[0].value = '';
@@ -92,6 +104,7 @@ let appData = {
       }
     });
   },
+  // 1)
   getIncome: function () {
     incomeItems.forEach(function (item) {
       let itemIncome = item.querySelector('.income-title').value,
@@ -112,7 +125,8 @@ let appData = {
     additionalIncomeValue.value = appData.addIncome.join(', ');
     targetMonthValue.value = appData.getTargetMonth();
     incomePeriodValue.value = appData.calcPeriod();
-    periodSelect.addEventListener('mouseup', function () {
+    // 5) Расчет “Накопления за период” сразу при изменении значении в ползунке
+    periodSelect.addEventListener('input', function () {
       periodAmount.textContent = periodSelect.value;
       incomePeriodValue.value = appData.calcPeriod();
     });
@@ -141,6 +155,7 @@ let appData = {
       appData.expensesMonth += +appData.expenses[key];
     }
   },
+  // 3)
   getBudget: function () {
     appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
     appData.budgetDay = Math.floor(appData.budgetMonth / 30);
@@ -172,6 +187,7 @@ let appData = {
   calcPeriod: function () {
     return appData.budgetMonth * periodSelect.value;
   },
+  // 6) Блокирует инпуты после расчета 
   blockInput: function () {
     dataInput.forEach(function (item) {
       item.readOnly = true;
@@ -180,30 +196,22 @@ let appData = {
 };
 
 
-
+// Отслеживает и не дает вводить в инут [placeholder=Наименование] ничего кроме кирилицы
 placeHolderName.forEach(function (item) {
-  // item.addEventListener('keydown', function(event){
-  //     if (!isNaN(event.target.value)) {
-  //         event.target.value = '';
-  //         return;
-  //     }
-  // });
   item.addEventListener('input', function (event) {
     event.target.value = event.target.value.replace(/[^а-яА-ЯёЁ .?!,]/i, '');
   });
 });
 
+// Отслеживает и не дает вводить в инут [placeholder=Сумма] ничего кроме цифр
 placeHolderSum.forEach(function (item) {
-  item.addEventListener('blur', function (event) {
-    if (isNaN(event.target.value)) {
-      alert('Вводите только цифры!');
-      event.target.value = '';
-      return;
-    }
+  item.addEventListener('input', function (event) {
+    event.target.value = event.target.value.replace(/[\D]/i, '');
   });
 });
 
-periodSelect.addEventListener('mouseup', function () {
+// 4) Отслеживаем изменения ползунка и передаем значение в periodAmount
+periodSelect.addEventListener('input', function () { 
   periodAmount.textContent = periodSelect.value;
 });
 
