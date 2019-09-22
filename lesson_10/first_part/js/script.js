@@ -1,4 +1,23 @@
 'use strict';
+
+// 1) Сделать класс DomElement, который содержит свойства
+//   - selector, 
+//   - height, 
+//   - width, 
+//   - bg, 
+//   - fontSize
+// содержит метод, который создает элемент на странице если в 
+// селектор передана строка начинающаяся с точки ‘.’ 
+// создавать <div></div> с таким классом если с решетки ‘#’, то создать параграф <p></p>
+// с помощью cssText задавать стили: 
+//   - высотой - height,
+//   - шириной - width, 
+//   - background - bg
+//   - размер текста fontSize 
+// внутрь записывать любой текст
+// 2) Создать новый объект на основе класса DomElement
+// 3) Вызвать его метод чтобы получить элемент на странице
+
 let body = document.querySelector('body');
 
 const DomElement = function () {
@@ -47,7 +66,7 @@ DomElement.prototype.squareMove = function () {
     let square = document.createElement('div');
     square.style.cssText = 'height: ' + this.height + 'px;' +
       'width: ' + this.width + 'px;' + 'position: absolute;' + 'background-color: red;' + 'left: 500px';
-    square.textContent = 'Передвинь меня клавишами "Вверх", "Вниз", "Влево" и "Вправо"';
+    square.textContent = '"Вверх", "Вниз", "Влево" и "Вправо"';
     body.insertBefore(square, body.children[0]);
     let left = 500,
       top = 0;

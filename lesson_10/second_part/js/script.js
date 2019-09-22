@@ -1,5 +1,10 @@
 'use strict';
 
+// 1)  Переписать наше приложение в ООП стиле, создать 
+//  Класс (в старом формате использовать es6 не нужно)
+// 2) Создать новый метод в классе, например eventsListeners.
+// 3) Перенести все действия, которые остались за классом внутрь него.
+
 let calculate = document.getElementById('start'),
     cancel = document.querySelector('#cancel'),
     plusIncome = document.getElementsByTagName('button')[0],
