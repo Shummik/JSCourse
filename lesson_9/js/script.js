@@ -1,6 +1,16 @@
 'use strict';
 
-let calculate = document.getElementById('start'),
+// 1) Привязать контекст(может быть только объектом) вызова функции start к appData 
+// 2) В нашем объекте везде использовать this как ссылку на 
+//  объект appData (где это возможно)
+// 3) Проверить работу кнопок плюс и input-range 
+// (исправить если что-то не работает)
+// 4) Блокировать все input[type=text] с левой стороны после нажатия 
+//     кнопки рассчитать, после этого кнопка Рассчитать пропадает 
+// и появляется кнопка Сбросить, на которую навешиваем событие и выполнение метода reset
+// Метод reset должен всю программу возвращать в исходное состояние
+
+let calculate = document.getElementById('start'),  
     cancel = document.querySelector('#cancel'),
     plusIncome = document.getElementsByTagName('button')[0],
     plusExpenses = document.getElementsByTagName('button')[1],
@@ -60,9 +70,15 @@ let appData = {
         this.getIncome();
         this.blockInput();
         this.showResult();
+        // В данном случае наш this вызывается(=) в AppData
 
         calculate.style.display = 'none';
         cancel.style.display = 'block';
+        //Меняем отображение кнопки Рассчитать на Сбросить
+    },
+    // Отдельная функция сброса
+    cancel: function() {
+        appData.reset();
     },
     addExpensesBlock: function() {
         
@@ -72,10 +88,11 @@ let appData = {
         
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, plusExpenses);
         expensesItems = document.querySelectorAll('.expenses-items');
-        
+
+        // Отключает кнопку добавления расходов. Не более 3-х элементов
         if (expensesItems.length === 3) {
             plusExpenses.style.display = 'none';
-        }
+        }        
         cancel.addEventListener('click', () => {
             cloneExpensesItem.children[0].value = '';
             cloneExpensesItem.children[1].value = '';
@@ -254,7 +271,7 @@ periodSelect.addEventListener('input', function(){
 });
 
 calculate.addEventListener('click', appData.start.bind(appData));
-cancel.addEventListener('click', appData.reset.bind(appData));
+cancel.addEventListener('click', appData.cancel.bind(appData));
 
 plusExpenses.addEventListener('click', appData.addExpensesBlock);
 plusIncome.addEventListener('click', appData.addIncomeBlock);
